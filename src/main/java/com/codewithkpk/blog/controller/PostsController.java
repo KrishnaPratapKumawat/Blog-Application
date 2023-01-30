@@ -30,10 +30,9 @@ public class PostsController {
     @Value("${project.image}")
     private String path;
    @PostMapping("/addPost/user/{userId}/category/{categoryId}")
-    public ResponseEntity<PostsDto>createPost(@RequestBody PostsDto postsDto, @PathVariable Integer userId, @PathVariable Integer categoryId){
-        PostsDto savePost = this.postService.createPost(postsDto,userId,categoryId);
-        this.emailAuthentication.sendEmail(userId,categoryId,postsDto);
-        return new ResponseEntity<PostsDto>(savePost,HttpStatus.CREATED);
+    public ResponseEntity<Boolean>createPost(@RequestBody PostsDto postsDto, @PathVariable Integer userId, @PathVariable Integer categoryId){
+        boolean savePost = this.emailAuthentication.sendEmail(userId,categoryId,postsDto);
+        return new ResponseEntity<Boolean>(savePost,HttpStatus.CREATED);
     }
     @GetMapping("/user/{userId}/")
     public ResponseEntity<List<PostsDto>>getPostByUser(@PathVariable Integer userId){

@@ -1,6 +1,8 @@
 package com.codewithkpk.blog.payloads;
 
+import com.codewithkpk.blog.entity.Category;
 import com.codewithkpk.blog.entity.Comment;
+import com.codewithkpk.blog.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +21,7 @@ public class PostsDto {
     private String postContent;
     private String postImageName;
     private Date currentDate;
-    private CategoryDto category;
-    private UserDataTransferOption user;
+    private Category category;
+    private User user;
     private Set<CommentDto>comment = new HashSet<>();
 }

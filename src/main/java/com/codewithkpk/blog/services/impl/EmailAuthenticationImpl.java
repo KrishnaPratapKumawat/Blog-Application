@@ -1,6 +1,5 @@
 package com.codewithkpk.blog.services.impl;
 
-import com.codewithkpk.blog.entity.Posts;
 import com.codewithkpk.blog.entity.User;
 import com.codewithkpk.blog.exception.ResourceNotFoundException;
 import com.codewithkpk.blog.payloads.PostsDto;
@@ -11,10 +10,10 @@ import com.codewithkpk.blog.services.EmailAuthentication;
 import com.codewithkpk.blog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -35,9 +34,12 @@ public class EmailAuthenticationImpl implements EmailAuthentication {
     @Override
     public boolean sendEmail(Integer userId, Integer categoryId,PostsDto postsDto) {
         User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
-        String postTitle = postService.createPost(postsDto, userId, categoryId).getPostTitle();
-        Integer postId = this.postService.createPost(postsDto, userId, categoryId).getPostId();
-        Date date = this.postService.createPost(postsDto, userId, categoryId).getCurrentDate();
+        PostsDto savePost = postService.createPost(postsDto,userId,categoryId);
+        int postId = savePost.getPostId();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        Date dateFormat = savePost.getCurrentDate();
+        String postTitle = savePost.getPostTitle();
+        String date = simpleDateFormat.format(dateFormat);
         String host = "smtp.gmail.com";
         String name = user.getUserName();
         String email = user.getEmail();
