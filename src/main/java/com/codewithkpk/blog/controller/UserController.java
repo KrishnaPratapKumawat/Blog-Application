@@ -34,7 +34,6 @@ public class UserController {
 
 		return ResponseEntity.ok(this.userServices.getAllUserData());
 	}
-	//, produces = MediaType.APPLICATION_XML_VALUE(Show response in xml)
 	@GetMapping(value = "/getUserData/{userId}")
 	public ResponseEntity<UserDataTransferOption>getUserData(@PathVariable int userId){
 
